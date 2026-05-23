@@ -23,3 +23,29 @@ obj
 *.nupkg
 
 .cpcache
+.cpcache/
+
+# Editor / language-server caches (keep checked-in config files)
+.clj-kondo/*
+!.clj-kondo/config.edn
+.lsp/
+.calva/
+.vscode/
+.idea/
+.nrepl-port
+
+# OS cruft
+.DS_Store
+
+# Nostrand build artifacts (consumed by `nos dotnet/build` and
+# `nos dotnet/run-tests`)
+/build/
+/deps/
+
+# Local assistant settings
+.claude/
+.clojure-mcp/
+
+# Local working notes (not for upstream)
+/dev-logs/
+CLAUDE.md
