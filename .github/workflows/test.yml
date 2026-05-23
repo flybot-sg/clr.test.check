@@ -1,0 +1,36 @@
+name: test
+
+# Only the Magic port branch needs CI. `master` mirrors
+# clojure/clr.test.check upstream and is not exercised here.
+on:
+  push:
+    branches: [magic]
+  pull_request:
+    branches: [magic]
+
+jobs:
+  clr-test:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flybot-sg/ci-clj-clr:1.2.0
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Cache JVM dependency stores
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.cpcache
+          key: ${{ runner.os }}-deps-${{ hashFiles('deps.edn', 'bb.edn', 'project.edn') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
+
+      - name: Tool versions
+        run: |
+          nos version || true
+          bb --version || true
+
+      - name: Run CLR test suite via Nostrand/Magic
+        run: bb clr-test
