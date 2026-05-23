@@ -1,0 +1,22 @@
+;; clj-kondo config for the magic CLR port of clr.test.check.
+;; Silences false positives from CLR types and test.check macros that
+;; kondo's JVM-trained analyser doesn't recognise.
+
+{:cljc {:features #{:clj}}
+
+ :lint-as {clojure.test.check.clojure-test/defspec clojure.test/deftest
+           clojure.test.check.properties/for-all   clojure.core/let}
+
+ :linters
+ {:unresolved-namespace
+  {:exclude [Int32 Int64 BitConverter Environment Type System.Guid]}
+
+  :unresolved-symbol
+  {;; `|` falls out of kondo's tokenization of CLR pipe-delimited
+   ;; type names like |System.Threading.ThreadLocal`1[System.Object]|.
+   :exclude [size-bounded-bigint sys-func |]}
+
+  :unreachable-code  {:level :off}
+  :unused-binding    {:level :off}
+  :duplicate-require {:level :off}
+  :deprecated-var    {:level :off}}}
