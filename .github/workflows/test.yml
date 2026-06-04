@@ -12,7 +12,7 @@ jobs:
   clr-test:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/flybot-sg/ci-clj-clr:1.2.0
+      image: ghcr.io/flybot-sg/ci-clj-clr:2.0.0
     steps:
       - uses: actions/checkout@v6
 
@@ -23,7 +23,7 @@ jobs:
             ~/.m2/repository
             ~/.gitlibs
             ~/.cpcache
-          key: ${{ runner.os }}-deps-${{ hashFiles('deps.edn', 'bb.edn', 'project.edn') }}
+          key: ${{ runner.os }}-deps-${{ hashFiles('deps.edn', 'bb.edn') }}
           restore-keys: |
             ${{ runner.os }}-deps-
 
