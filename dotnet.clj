@@ -17,10 +17,17 @@
   "Compiles the project to dlls.
   nos dotnet/build"
   []
-  (tasks/compile-project :exclude cljs-only))
+  (tasks/compile-project :clean? true :exclude cljs-only))
 
 (defn run-tests
   "Run all the tests on the CLR.
   nos dotnet/run-tests"
   []
-  (tasks/run-clojure-tests :aliases [:test] :exclude cljs-only))
+  ;; run-clojure-tests calls run-all-tests, which sweeps every loaded
+  ;; namespace (clojure.*, magic.*, nostrand.*, dependency suites), not
+  ;; just this project's. :re scopes the run to our own namespaces via
+  ;; re-matches (full match, hence the trailing .*). :exclude still does
+  ;; a different job: it stops the CLJS-only ns from loading at all.
+  (tasks/run-clojure-tests :aliases [:test]
+                           :exclude cljs-only
+                           :re #"clojure\.test\.check.*"))

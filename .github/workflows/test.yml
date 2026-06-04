@@ -12,9 +12,16 @@ jobs:
   clr-test:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/flybot-sg/ci-clj-clr:2.0.0
+      image: ghcr.io/flybot-sg/ci-clj-clr:2.1.0
     steps:
       - uses: actions/checkout@v6
+
+      # nostrand 0.5.0 honours GITLIBS (cloning under $GITLIBS/nostrand/),
+      # so pointing it at ~/.gitlibs reuses the cache block below. Set via
+      # GITHUB_ENV because job-level `env:` cannot expand $HOME, and both
+      # nostrand and tools.deps read the var literally.
+      - name: Point GITLIBS at the cached dir
+        run: echo "GITLIBS=$HOME/.gitlibs" >> "$GITHUB_ENV"
 
       - name: Cache JVM dependency stores
         uses: actions/cache@v5
