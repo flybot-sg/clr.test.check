@@ -1,8 +1,8 @@
 {:tasks
  {clr-test
   {:doc  "Run all tests on the CLR via Nostrand/Magic"
-   :task (shell "nos" "dotnet/run-tests")}
+   :task (shell "nos" "test")}
 
   clr-build
   {:doc  "Compile all production namespaces to .dll via Nostrand/Magic"
-   :task (shell "nos" "dotnet/build")}}}
+   :task (shell "nos" "build")}}}

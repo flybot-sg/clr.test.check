@@ -37,8 +37,7 @@ obj
 # OS cruft
 .DS_Store
 
-# Nostrand build artifacts (consumed by `nos dotnet/build` and
-# `nos dotnet/run-tests`)
+# Nostrand build artifacts (produced by `nos build` / `nos test`)
 /build/
 /deps/
 

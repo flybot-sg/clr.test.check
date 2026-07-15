@@ -1,0 +1,2 @@
+{:build {:exclude [clojure.test.check.clojure-test.assertions.cljs]}
+ :test  {:exclude [clojure.test.check.clojure-test.assertions.cljs]}}
